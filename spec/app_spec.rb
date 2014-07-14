@@ -23,4 +23,14 @@ feature "home page" do
     click_on "Submit"
     expect(page).to have_content("Thank you for registering")
   end
+
+  scenario "user can login" do
+    visit '/'
+    expect(page).to have_content("Login")
+    expect(page).to have_content("Username:")
+    expect(page).to have_content("Password:")
+    click_on "login"
+    expect(page).to have_content("You are logged in")
+  end
+
 end

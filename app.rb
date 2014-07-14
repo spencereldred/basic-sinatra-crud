@@ -26,5 +26,15 @@ class App < Sinatra::Application
     redirect '/'
   end
 
+  post '/login' do
+    username = params[:username]
+    password = params[:password]
+    current_user = @database_connection.sql("SELECT * FROM users WHERE username='#{username}' AND password='#{password}'")
+    if current_user
+      flash[:notice] = "You are logged in"
+    end
+    redirect '/'
+  end
+
 
 end
