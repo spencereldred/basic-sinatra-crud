@@ -3,6 +3,9 @@
 </form>
 <% if session[:user_id] %>
   <h3>Logout</h3>
+  <form method="post" action="/logout">
+    <button>logout</button>
+  </form>
 <% else %>
   <h3>Login</h3>
   <form method="post" action="login" >
