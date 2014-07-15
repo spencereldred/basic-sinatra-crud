@@ -17,6 +17,9 @@ feature "home page" do
 
   scenario "user can register, login and logout" do
     visit '/'
+    expect(page).to have_content("Login")
+    expect(page).to have_content("Username:")
+    expect(page).to have_content("Password:")
     click_on "Registration"
     fill_in('username', :with => 'Spencer')
     fill_in('password', :with => '123')
@@ -59,5 +62,14 @@ feature "home page" do
     click_on "Submit"
     expect(page).to have_content("You need to fill in username and password")
   end
+
+  scenario "user register with an already used username" do
+    fill_in_registration_form_and_submit("spencer")
+    expect(page).to have_content("Thank you for registering")
+    fill_in_registration_form_and_submit("spencer")
+    expect(page).to have_content("Username is already in use, choose another username")
+  end
+
+
 
 end

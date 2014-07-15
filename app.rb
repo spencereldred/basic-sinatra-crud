@@ -31,11 +31,17 @@ class App < Sinatra::Application
       elsif username == ''
         flash[:notice] = "You need to fill in username"
       end
-      redirect '/'
+      redirect '/register'
+    else
+      begin
+        @database_connection.sql("INSERT INTO users (username,password) VALUES('#{username}', '#{password}')")
+        flash[:notice] = "Thank you for registering"
+        redirect '/'
+      rescue
+        flash[:notice] = "Username is already in use, choose another username"
+        redirect '/register'
+      end
     end
-    @database_connection.sql("INSERT INTO users (username,password) VALUES('#{username}', '#{password}')")
-    flash[:notice] = "Thank you for registering"
-    redirect '/'
   end
 
   post '/login' do
