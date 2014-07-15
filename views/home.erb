@@ -7,7 +7,7 @@
 <hr />
 <% if session[:user_id] %>
   <% users.each do |user| %>
-    <%= user["username"] %>
+    <a href="/delete/<%= user["username"] %>"><%= user["username"] %></a><br>
   <% end %>
   <h3>Logout</h3>
   <form method="post" action="/logout">

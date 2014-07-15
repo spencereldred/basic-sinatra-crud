@@ -101,4 +101,15 @@ feature "home page" do
     expect(page).to have_content("Seth Lily Annie")
   end
 
+  scenario "logged in user can delete other users" do
+    fill_in_registration_form_and_submit("Seth")
+    fill_in_registration_form_and_submit("Adam")
+    fill_in('username', :with => 'Seth')
+    fill_in('password', :with => 'seth')
+    click_on "login"
+    expect(page).to have_content("Adam")
+    click_on "Adam"
+    expect(page).not_to have_content("Adam")
+  end
+
 end
