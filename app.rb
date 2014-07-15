@@ -17,6 +17,18 @@ class App < Sinatra::Application
     erb :home, locals: {users: users}
   end
 
+  get '/order/:order'do
+    if params[:order] == "ascending"
+      order = "ASC"
+    elsif params[:order] == "descending"
+      order = "DESC"
+    else
+      redirect '/'
+    end
+    users = @database_connection.sql("SELECT * FROM users WHERE id != #{session[:user_id].to_i} ORDER BY username #{order}")
+    erb :home, locals: {users: users}
+  end
+
   get '/register' do
     erb :register
   end

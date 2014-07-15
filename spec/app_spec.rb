@@ -81,6 +81,24 @@ feature "home page" do
     click_on "login"
     expect(page).to have_content("Seth Lily Annie")
     expect(page).not_to have_content("Spencer")
+
+  end
+
+  scenario "As a logged in user, I can select ascending or decending order" do
+    visit '/'
+    fill_in_registration_form_and_submit("Spencer")
+    fill_in_registration_form_and_submit("Seth")
+    fill_in_registration_form_and_submit("Annie")
+    fill_in_registration_form_and_submit("Lily")
+    fill_in('username', :with => 'Spencer')
+    fill_in('password', :with => 'spencer')
+    click_on "login"
+    expect(page).to have_content("Seth Annie Lily")
+    expect(page).not_to have_content("Spencer")
+    click_on "ASC"
+    expect(page).to have_content("Annie Lily Seth")
+    click_on "DESC"
+    expect(page).to have_content("Seth Lily Annie")
   end
 
 end

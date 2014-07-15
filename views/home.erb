@@ -1,6 +1,10 @@
 <form method="get" action="/register">
   <button type="submit" name="register">Registration</button>
 </form>
+<h3> List of Users</h3>
+<a href="/order/ascending">ASC</a>
+<a href="/order/descending">DESC</a>
+<hr />
 <% if session[:user_id] %>
   <% users.each do |user| %>
     <%= user["username"] %>
