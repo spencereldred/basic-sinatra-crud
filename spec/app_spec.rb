@@ -70,7 +70,7 @@ feature "home page" do
     expect(page).to have_content("Username is already in use, choose another username")
   end
 
-  scenario "As a logged in user, I can see a list of users on home page" do
+  scenario "As a logged in user, I can see a list of users, except myself, on home page" do
     visit '/'
     fill_in_registration_form_and_submit("Spencer")
     fill_in_registration_form_and_submit("Seth")
@@ -79,8 +79,8 @@ feature "home page" do
     fill_in('username', :with => 'Spencer')
     fill_in('password', :with => 'spencer')
     click_on "login"
-    expect(page).to have_content("Spencer Seth Lily Annie")
+    expect(page).to have_content("Seth Lily Annie")
+    expect(page).not_to have_content("Spencer")
   end
-
 
 end
