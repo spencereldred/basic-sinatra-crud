@@ -64,12 +64,23 @@ feature "home page" do
   end
 
   scenario "user register with an already used username" do
-    fill_in_registration_form_and_submit("spencer")
+    fill_in_registration_form_and_submit("Spencer")
     expect(page).to have_content("Thank you for registering")
-    fill_in_registration_form_and_submit("spencer")
+    fill_in_registration_form_and_submit("Spencer")
     expect(page).to have_content("Username is already in use, choose another username")
   end
 
+  scenario "As a logged in user, I can see a list of users on home page" do
+    visit '/'
+    fill_in_registration_form_and_submit("Spencer")
+    fill_in_registration_form_and_submit("Seth")
+    fill_in_registration_form_and_submit("Lily")
+    fill_in_registration_form_and_submit("Annie")
+    fill_in('username', :with => 'Spencer')
+    fill_in('password', :with => 'spencer')
+    click_on "login"
+    expect(page).to have_content("Spencer Seth Lily Annie")
+  end
 
 
 end

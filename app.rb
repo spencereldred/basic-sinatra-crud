@@ -13,7 +13,8 @@ class App < Sinatra::Application
   end
 
   get "/" do
-    erb :home
+    users = @database_connection.sql("SELECT * FROM users")
+    erb :home, locals: {users: users}
   end
 
   get '/register' do

@@ -2,6 +2,9 @@
   <button type="submit" name="register">Registration</button>
 </form>
 <% if session[:user_id] %>
+  <% users.each do |user| %>
+    <%= user["username"] %>
+  <% end %>
   <h3>Logout</h3>
   <form method="post" action="/logout">
     <button>logout</button>
