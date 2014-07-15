@@ -14,7 +14,8 @@ class App < Sinatra::Application
 
   get "/" do
     users = @database_connection.sql("SELECT * FROM users WHERE id != #{session[:user_id].to_i}")
-    erb :home, locals: {users: users}
+    fishes = @database_connection.sql("SELECT * FROM fishes  WHERE user_id=#{session[:user_id].to_i}")
+    erb :home, locals: {users: users, fishes: fishes}
   end
 
   get '/order/:order'do
@@ -26,7 +27,8 @@ class App < Sinatra::Application
       redirect '/'
     end
     users = @database_connection.sql("SELECT * FROM users WHERE id != #{session[:user_id].to_i} ORDER BY username #{order}")
-    erb :home, locals: {users: users}
+    fishes = @database_connection.sql("SELECT * FROM fishes  WHERE user_id=#{session[:user_id].to_i}")
+    erb :home, locals: {users: users, fishes: fishes}
   end
 
   get '/register' do
@@ -55,6 +57,19 @@ class App < Sinatra::Application
         redirect '/register'
       end
     end
+  end
+
+  get "/add_fish" do
+    erb :new_fish
+  end
+
+  post "/add_fish" do
+    name = params[:name]
+    url = params[:url]
+    user_id = session[:user_id].to_i
+    @database_connection.sql("INSERT INTO fishes (name, url, user_id) VALUES ('#{name}', '#{url}', #{user_id})")
+
+    redirect "/"
   end
 
   get "/delete/:name" do

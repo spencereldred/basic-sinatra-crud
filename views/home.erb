@@ -1,19 +1,30 @@
 <form method="get" action="/register">
   <button type="submit" name="register">Registration</button>
 </form>
-<h3> List of Users</h3>
-<a href="/order/ascending">ASC</a>
-<a href="/order/descending">DESC</a>
-<hr />
+
 <% if session[:user_id] %>
+
+  <h3> List of Users</h3>
+  <a href="/order/ascending">ASC</a>
+  <a href="/order/descending">DESC</a>
+  <hr />
   <% users.each do |user| %>
     <a href="/delete/<%= user["username"] %>"><%= user["username"] %></a><br>
   <% end %>
+
+  <h3> Fish </h3>
+  <a href="/add_fish">Add Fish</a><br>
+  <% fishes.each do |fish| %>
+    <%= fish["name"] %><br>
+  <% end %>
+
   <h3>Logout</h3>
   <form method="post" action="/logout">
     <button>logout</button>
   </form>
+
 <% else %>
+
   <h3>Login</h3>
   <form method="post" action="login" >
     <lable for="username">Username:</lable>
@@ -22,4 +33,5 @@
     <input type="password" name="password"><br>
     <button>login</button>
   </form>
+
 <% end %>
